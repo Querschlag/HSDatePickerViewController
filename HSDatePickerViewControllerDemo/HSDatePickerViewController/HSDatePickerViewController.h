@@ -97,5 +97,5 @@ typedef enum : NSUInteger {
  *  Back button title
  */
 @property (nonatomic, strong) NSString *backButtonTitle;
-
+@property (nonatomic, assign) NSUInteger numOfComponent;
 @end

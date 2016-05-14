@@ -27,7 +27,16 @@
 
 - (IBAction)showDatePicker:(id)sender {
     HSDatePickerViewController *hsdpvc = [[HSDatePickerViewController alloc] init];
+    hsdpvc.numOfComponent = 1;
     hsdpvc.delegate = self;
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy年MM月dd日"];
+    hsdpvc.dateFormatter = df;
+    hsdpvc.numOfComponent = 1;
+//    hsdpvc.view.backgroundColor = [UIColor whiteColor];
+    hsdpvc.dismissOnCancelTouch = NO;
+    
     if (self.selectedDate) {
         hsdpvc.date = self.selectedDate;
     }

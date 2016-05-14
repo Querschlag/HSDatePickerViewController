@@ -74,7 +74,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     [super viewDidLoad];
     
     //Set deafult values for pickers
-    for (NSUInteger i = 0; i < 3; i++) {
+    for (NSUInteger i = 0; i < self.numOfComponent; i++) {
         [self.pickerView selectRow:[self defaultRowValueForComponent:i] inComponent:i animated:NO];
     }
     //Before call of this all parameters must be setted
@@ -112,9 +112,9 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     [self.pickerBackgroundView addGestureRecognizer:gestureRecognizer];
 
     //Set hours and minutes to selected values
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self.date];
-    [self setPickerView:self.pickerView rowInComponent:HourPicker toIntagerValue:[components hour] decrementing:NO animated:NO];
-    [self setPickerView:self.pickerView rowInComponent:MinutePicker toIntagerValue:[components minute]  decrementing:NO animated:NO];
+//    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self.date];
+//    [self setPickerView:self.pickerView rowInComponent:HourPicker toIntagerValue:[components hour] decrementing:NO animated:NO];
+//    [self setPickerView:self.pickerView rowInComponent:MinutePicker toIntagerValue:[components minute]  decrementing:NO animated:NO];
     
 }
 
@@ -232,7 +232,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
 #pragma mark - UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
+    return self.numOfComponent;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
@@ -268,7 +268,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     CGFloat width = 0.0;
     switch (component) {
         case DayPicker:
-            width = 140;
+            width = 200;
             break;
         case HourPicker:
             width = 40;
@@ -289,7 +289,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     switch (component) {
         case DayPicker:
             title = [self stringDateForRow:row];
-            [paragraphStyle setAlignment:NSTextAlignmentRight];
+            [paragraphStyle setAlignment:NSTextAlignmentCenter];
             break;
         case HourPicker:
             title = [NSString stringWithFormat:@"%02ld", row % [self realNumberOfRowsInComponent:component]];
@@ -414,7 +414,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 - (NSString *)stringDateForRow:(NSUInteger)row {
     NSDate *date = [self dateForRow:row];
     if ([self isDate:date sameDayAsDate:[NSDate date]]) {
-        return NSLocalizedString(@"Today", @"Current day indicator");
+        return NSLocalizedString(@"今天", @"Current day indicator");
     }
     return [self.dateFormatter stringFromDate:date];
 }
@@ -441,9 +441,10 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
 - (NSDate *)dateWithSelectedTime {
     NSDate *date = [self dateForRow:[self.pickerView selectedRowInComponent:DayPicker]];
-    NSInteger hour = [[self pickerView:self.pickerView attributedTitleForRow:[self.pickerView selectedRowInComponent:HourPicker] forComponent:HourPicker].string integerValue];
-    NSInteger minute = [[self pickerView:self.pickerView attributedTitleForRow:[self.pickerView selectedRowInComponent:MinutePicker] forComponent:MinutePicker].string integerValue];
-    return [[NSCalendar currentCalendar] dateBySettingHour:hour minute:minute second:0 ofDate:date options:0];
+//    NSInteger hour = [[self pickerView:self.pickerView attributedTitleForRow:[self.pickerView selectedRowInComponent:HourPicker] forComponent:HourPicker].string integerValue];
+//    NSInteger minute = [[self pickerView:self.pickerView attributedTitleForRow:[self.pickerView selectedRowInComponent:MinutePicker] forComponent:MinutePicker].string integerValue];
+//    return [[NSCalendar currentCalendar] dateBySettingHour:hour minute:minute second:0 ofDate:date options:0];
+    return date;
 }
 
 #pragma mark - Actions
@@ -467,16 +468,16 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
         [self.delegate hsDatePickerPickedDate:[self dateWithSelectedTime]];
     }
     
-    if ([self.delegate respondsToSelector:@selector(hsDatePickerWillDismissWithQuitMethod:)]) {
-        [self.delegate hsDatePickerWillDismissWithQuitMethod:QuitWithResult];
-    }
-    void (^success)(void) = nil;
-    if ([self.delegate respondsToSelector:@selector(hsDatePickerDidDismissWithQuitMethod:)]) {
-        success = ^{
-            [self.delegate hsDatePickerDidDismissWithQuitMethod:QuitWithResult];
-        };
-    }
-    [self dismissViewControllerAnimated:YES completion:success];
+//    if ([self.delegate respondsToSelector:@selector(hsDatePickerWillDismissWithQuitMethod:)]) {
+//        [self.delegate hsDatePickerWillDismissWithQuitMethod:QuitWithResult];
+//    }
+//    void (^success)(void) = nil;
+//    if ([self.delegate respondsToSelector:@selector(hsDatePickerDidDismissWithQuitMethod:)]) {
+//        success = ^{
+//            [self.delegate hsDatePickerDidDismissWithQuitMethod:QuitWithResult];
+//        };
+//    }
+//    [self dismissViewControllerAnimated:YES completion:success];
 }
 
 - (IBAction)quitPicking:(id)sender {
