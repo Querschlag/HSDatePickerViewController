@@ -29,7 +29,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
 @property (weak, nonatomic) IBOutlet UIButton *monthPreviousButton;
 @property (weak, nonatomic) IBOutlet UIButton *monthNextButton;
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (nonatomic, assign) NSInteger maxRowIndex;
@@ -86,23 +86,23 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     
     self.separator1View.backgroundColor = self.separator2View.backgroundColor = self.separator3View.backgroundColor = self.mainColor;
     
-    self.monthAndYearLabel.textColor = self.mainColor;
+    self.monthAndYearLabel.textColor = [self.view tintColor];
     
-    [self.monthNextButton setTitleColor:self.mainColor forState:UIControlStateNormal];
-    [self.monthNextButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
-    [self.monthNextButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.3] forState:UIControlStateDisabled];
-    
-    [self.monthPreviousButton setTitleColor:self.mainColor forState:UIControlStateNormal];
-    [self.monthPreviousButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
-    [self.monthPreviousButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.3] forState:UIControlStateDisabled];
+//    [self.monthNextButton setTitleColor:self.mainColor forState:UIControlStateNormal];
+//    [self.monthNextButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+//    [self.monthNextButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.3] forState:UIControlStateDisabled];
+//    
+//    [self.monthPreviousButton setTitleColor:self.mainColor forState:UIControlStateNormal];
+//    [self.monthPreviousButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+//    [self.monthPreviousButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.3] forState:UIControlStateDisabled];
     
     [self.confirmButton setTitle:self.confirmButtonTitle forState:UIControlStateNormal];
-    [self.confirmButton setTitleColor:self.mainColor forState:UIControlStateNormal];
-    [self.confirmButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
-    
+//    [self.confirmButton setTitleColor:self.mainColor forState:UIControlStateNormal];
+//    [self.confirmButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+//    
     [self.backButton setTitle:self.backButtonTitle forState:UIControlStateNormal];
-    [self.backButton setTitleColor:self.mainColor forState:UIControlStateNormal];
-    [self.backButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
+//    [self.backButton setTitleColor:self.mainColor forState:UIControlStateNormal];
+//    [self.backButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
     
     //Add gesture recognizer to superview...
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelTapGesture:)];
