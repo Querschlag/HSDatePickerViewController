@@ -99,5 +99,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSString *backButtonTitle;
 @property (nonatomic, assign) NSUInteger numOfComponent;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
-@property (nonatomic, strong) UIActivityIndicatorView *activityHUD;//确定按钮旁边的Indicator
+@property (nonatomic, strong) UIActivityIndicatorView *activityHUD;
+@property (nonatomic, strong) UIColor *tintColor;
 @end

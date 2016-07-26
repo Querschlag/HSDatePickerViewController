@@ -31,11 +31,12 @@
     hsdpvc.delegate = self;
     
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy年MM月dd日"];
+    [df setLocalizedDateFormatFromTemplate:@"yyyy MM dd"];
     hsdpvc.dateFormatter = df;
     hsdpvc.numOfComponent = 1;
 //    hsdpvc.view.backgroundColor = [UIColor whiteColor];
     hsdpvc.dismissOnCancelTouch = NO;
+    hsdpvc.tintColor = [UIColor whiteColor];
     
     if (self.selectedDate) {
         hsdpvc.date = self.selectedDate;
@@ -47,7 +48,7 @@
 - (void)hsDatePickerPickedDate:(NSDate *)date {
     NSLog(@"Date picked %@", date);
     NSDateFormatter *dateFormater = [NSDateFormatter new];
-    dateFormater.dateFormat = @"yyyy.MM.dd HH:mm:ss";
+    [dateFormater setLocalizedDateFormatFromTemplate:@"yyyy.MM.dd HH:mm:ss"];
     self.dateLabel.text = [dateFormater stringFromDate:date];
     
     self.selectedDate = date;

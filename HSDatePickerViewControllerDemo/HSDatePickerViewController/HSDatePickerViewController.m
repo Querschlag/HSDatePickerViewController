@@ -41,6 +41,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 @implementation HSDatePickerViewController
 @synthesize minDate = _minDate;
 @synthesize maxDate = _maxDate;
+@synthesize tintColor = _tintColor;
 
 #pragma mark - Controller lifecycle
 
@@ -53,6 +54,8 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
         
         self.dismissOnCancelTouch = YES;
         self.minuteStep = StepFiveMinutes;
+
+        self.numOfComponent = 1;
         
         //Min and max data test
         //self.minDate = [NSDate dateWithTimeIntervalSinceNow:60*60*24*-60 + 3*60*60];
@@ -86,7 +89,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
     
     self.separator1View.backgroundColor = self.separator2View.backgroundColor = self.separator3View.backgroundColor = self.mainColor;
     
-    self.monthAndYearLabel.textColor = [self.view tintColor];
+    self.monthAndYearLabel.textColor = self.tintColor;
     
 //    [self.monthNextButton setTitleColor:self.mainColor forState:UIControlStateNormal];
 //    [self.monthNextButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.7] forState:UIControlStateHighlighted];
@@ -179,7 +182,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 - (NSDateFormatter *)dateFormatter {
     if (!_dateFormatter) {
         _dateFormatter = [NSDateFormatter new];
-        _dateFormatter.dateFormat = @"ccc d MMM";
+        [_dateFormatter setLocalizedDateFormatFromTemplate:@"ccc d MMM"];
     }
     return _dateFormatter;
 }
@@ -187,7 +190,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 - (NSDateFormatter *)monthAndYearLabelDateFormater {
     if (!_monthAndYearLabelDateFormater) {
         _monthAndYearLabelDateFormater = [NSDateFormatter new];
-        _monthAndYearLabelDateFormater.dateFormat = @"MMMM yyyy";
+        [_monthAndYearLabelDateFormater setLocalizedDateFormatFromTemplate: @"MMMM yyyy"];
     }
     return _monthAndYearLabelDateFormater;
 }
@@ -228,6 +231,19 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
         }
     }
     return _minRowIndex;
+}
+
+- (UIColor *)tintColor {
+    if (!_tintColor) {
+        return self.view.tintColor;
+    }
+    return  _tintColor;
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    _tintColor = tintColor;
+    self.monthAndYearLabel.textColor = tintColor;
+    self.view.tintColor = tintColor;
 }
 
 #pragma mark - UIPickerViewDataSource
@@ -414,7 +430,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 - (NSString *)stringDateForRow:(NSUInteger)row {
     NSDate *date = [self dateForRow:row];
     if ([self isDate:date sameDayAsDate:[NSDate date]]) {
-        return NSLocalizedString(@"今天", @"Current day indicator");
+        return NSLocalizedString(@"Today", @"Current day indicator");
     }
     return [self.dateFormatter stringFromDate:date];
 }
@@ -468,16 +484,16 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
         [self.delegate hsDatePickerPickedDate:[self dateWithSelectedTime]];
     }
     
-//    if ([self.delegate respondsToSelector:@selector(hsDatePickerWillDismissWithQuitMethod:)]) {
-//        [self.delegate hsDatePickerWillDismissWithQuitMethod:QuitWithResult];
-//    }
-//    void (^success)(void) = nil;
-//    if ([self.delegate respondsToSelector:@selector(hsDatePickerDidDismissWithQuitMethod:)]) {
-//        success = ^{
-//            [self.delegate hsDatePickerDidDismissWithQuitMethod:QuitWithResult];
-//        };
-//    }
-//    [self dismissViewControllerAnimated:YES completion:success];
+    if ([self.delegate respondsToSelector:@selector(hsDatePickerWillDismissWithQuitMethod:)]) {
+        [self.delegate hsDatePickerWillDismissWithQuitMethod:QuitWithResult];
+    }
+    void (^success)(void) = nil;
+    if ([self.delegate respondsToSelector:@selector(hsDatePickerDidDismissWithQuitMethod:)]) {
+        success = ^{
+            [self.delegate hsDatePickerDidDismissWithQuitMethod:QuitWithResult];
+        };
+    }
+    [self dismissViewControllerAnimated:YES completion:success];
 }
 
 - (IBAction)quitPicking:(id)sender {
